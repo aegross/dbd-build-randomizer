@@ -1,0 +1,5 @@
+flashlight
+key
+map
+medkit
+toolbox

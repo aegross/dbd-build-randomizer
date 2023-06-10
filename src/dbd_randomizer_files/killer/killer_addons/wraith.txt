@@ -1,0 +1,24 @@
+"The Serpent" - Soot
+"The Hound" - Soot
+"The Ghost" - Soot
+"The Beast" - Soot
+
+Bone Clapper
+"Blink" - Mud
+"Windstorm" - Mud
+"Swift Hunt" - Mud
+"Blind Warrior" - Mud
+
+"Windstorm" - White
+"Swift Hunt" - White
+"Shadow Dance" - White
+"Blink" - White
+"Blind Warrior" - White
+
+"Windstorm" - Blood
+"Swift Hunt" - Blood
+"Shadow Dance" - Blood
+"All Seeing" - Blood
+
+Coxcombed Clapper
+"All Seeing" - Spirit
