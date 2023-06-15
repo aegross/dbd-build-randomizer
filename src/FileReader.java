@@ -60,7 +60,6 @@ public abstract class FileReader {
         HashMap<String,String> fileElements = new HashMap<>();
 
         // go through the file and add every new line
-        // todo
         while (fileReader.hasNext()) {
             // read the element
             String element = fileReader.nextLine();
