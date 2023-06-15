@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Interface: Randomizer
  * Includes methods and imports necessary in all three Randomizer classes.
