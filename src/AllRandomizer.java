@@ -13,11 +13,13 @@ public class AllRandomizer implements Randomizer {
     Scanner commandLineInputAll;
     int responseNum;
     boolean responseValid;
-
-    // other variables that may be used
-    Scanner mapOfferingReader;
-    ArrayList<String> mapOfferings;
     Random random;
+
+    // lists
+    ArrayList<String> mapOfferings;
+
+    // list sizes
+    int numMapOfferings;
 
     // constructor
     public AllRandomizer() {
@@ -74,18 +76,10 @@ public class AllRandomizer implements Randomizer {
     public void generateMapOffering() throws FileNotFoundException {
         // load the arraylist
         String mapOfferingFile = filepathAll + "/map_offerings.txt";
-        mapOfferingReader = new Scanner(new File(mapOfferingFile));
-        mapOfferings = new ArrayList<String>();
-
-        // add the offerings from map_offerings.txt
-        while (mapOfferingReader.hasNext()) {
-            // add the elements of the file (simple strings separated by \n) to an ArrayList
-            String offering = mapOfferingReader.nextLine();
-            mapOfferings.add(offering);
-        }
+        mapOfferings = FileReader.readTextFile(mapOfferingFile);
 
         // count the number of offerings (get the length of the ArrayList)
-        int numMapOfferings = mapOfferings.size();
+        numMapOfferings = mapOfferings.size();
         // System.out.println("\nNumber of Map Offerings: " + numMapOfferings); // for debugging purposes
 
         // generate a random number from [0, (numMapOfferings - 1)]
