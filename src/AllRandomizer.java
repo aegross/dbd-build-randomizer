@@ -1,6 +1,5 @@
 // imports
 import java.io.FileNotFoundException;
-import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random; // if Random doesn't work: Math RANDOM FORMULA: Math.random() * (max - min + 1) + min
@@ -47,10 +46,8 @@ public class AllRandomizer implements Randomizer {
             // take the user's input and direct the application to the right randomizer
             // map offering
             if (responseNum == 1) {
-                responseValid = true;
-
                 // generate the map offering; try-catch for possible missing file
-                try { this.generateMapOffering(); }
+                try { generateMapOffering(); }
                 catch (FileNotFoundException f) {
                     // print the issue
                     System.out.println(f);
@@ -73,6 +70,10 @@ public class AllRandomizer implements Randomizer {
         }
     }
 
+    /**
+     * generateMapOffering() - Randomly generates a map offering using the list in map_offerings.txt.
+     * @throws FileNotFoundException if the map_offerings.txt file is not found
+     */
     public void generateMapOffering() throws FileNotFoundException {
         // load the arraylist
         String mapOfferingFile = filepathAll + "/map_offerings.txt";

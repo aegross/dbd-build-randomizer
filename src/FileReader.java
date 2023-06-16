@@ -16,7 +16,7 @@ public abstract class FileReader {
      * @return an ArrayList of Strings containing each non-empty line of the given .txt file as an element
      * @throws FileNotFoundException if the file at filepath is not found
      */
-    static ArrayList<String> readTextFile(String filepath) throws FileNotFoundException {
+    public static ArrayList<String> readTextFile(String filepath) throws FileNotFoundException {
         // create a scanner to read the given .txt file
         Scanner fileReader = new Scanner(new File(filepath));
 
@@ -52,7 +52,7 @@ public abstract class FileReader {
      * @return an HashMap containing String-String key-value pairs of each line in the given .csv
      * @throws FileNotFoundException if the file at filepath is not found
      */
-    static HashMap<String,String> readCSVFile(String filepath) throws FileNotFoundException {
+    public static HashMap<String,String> readCSVFile(String filepath) throws FileNotFoundException {
         // create a scanner to read the given .csv file
         Scanner fileReader = new Scanner(new File(filepath));
 
