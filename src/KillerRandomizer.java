@@ -239,12 +239,12 @@ public class KillerRandomizer implements Randomizer {
 
         // generate numAddOns number of random numbers
         for (int i = 0; i < numAddOns; i++) {
-            // if the number has already been chosen, do NOT add it (all selected perks should be unique)
+            // if the number has already been chosen, do NOT add it (all selected add-ons should be unique)
             // otherwise, add it
             do randomNum = random.nextInt(addOnCount);
             while (randomNumbers.contains(randomNum));
 
-            // print out the perk that was selected
+            // print out the add-on that was selected
             randomNumbers.add(randomNum);
             System.out.println("Random Add-On #" + (i+1) + ": " + addOns.get(randomNum));
         }
