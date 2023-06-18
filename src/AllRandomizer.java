@@ -64,9 +64,6 @@ public class AllRandomizer implements Randomizer {
                 // if the input was a string, nextInt() will throw an error anyway (implement try-catch?)
                 System.out.println("\nERROR: Invalid Input. Please Try Again.\n");
             }
-
-            // todo: ask the user if they want to generate something else
-            // System.out.println("");
         }
     }
 
