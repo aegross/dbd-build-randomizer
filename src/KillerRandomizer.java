@@ -38,7 +38,7 @@ public class KillerRandomizer implements Randomizer {
     }
 
     public void setup() {
-        // ...
+        // formatting
         System.out.println("\n---------------------------------    Randomizer - Killer    -----------------------------------\n");
 
         // read all the "general" files
@@ -131,7 +131,7 @@ public class KillerRandomizer implements Randomizer {
 
     /**
      * generateKiller() - Randomly generates a random killer from the list of killers in killer_list.csv,
-     * and returns the key of said killer for possible future use.
+     * and returns the key of said killer for future use.
      *
      * @return the key of the selected killer for the killerList HashMap
      */
@@ -154,7 +154,7 @@ public class KillerRandomizer implements Randomizer {
     /**
      * generateKillerLegendary() - Randomly generates a killer from the list of killers in killer_list_legendary.csv,
      * which includes legendary (and other distinct) cosmetics as character options. The key of the generated killer
-     * is returned for possible future use.
+     * is returned for future use.
      *
      * Note that the key-value pairings are flipped for killer_list_legendary.csv compared to killer_list.csv; this
      * is done so that a legendary killer's true name can be printed and used without issue.
@@ -179,7 +179,7 @@ public class KillerRandomizer implements Randomizer {
         }
         else {
             // otherwise, print the cosmetic name with the true name in parentheses
-            System.out.println("Randomly Selected Killer: " + key + " (" + killerList.get(value) + ")");
+            System.out.println("Randomly Selected Killer: " + key + " (" + trueName + ")");
         }
 
         // return the value (true key) for later use, if necessary
@@ -259,7 +259,6 @@ public class KillerRandomizer implements Randomizer {
         int randOfferingNum = random.nextInt(numKillerOfferings);
 
         // print out the offering that corresponds with the random number
-        // System.out.println("\nYou Selected: Map Offering"); // unsure if this is wanted
         System.out.println("Random Killer Offering: " + killerOfferings.get(randOfferingNum));
     }
 
