@@ -35,10 +35,10 @@ public abstract class FileReader {
         }
 
         // printing for debug: print the number of elements that the list found
-        /*
+        ///*
         int numElements = fileElements.size();
         System.out.println("Number of Elements in " + filepath + ": " + numElements);
-        */
+        //*/
 
         // return the filled list
         return fileElements;
@@ -78,10 +78,10 @@ public abstract class FileReader {
         }
 
         // printing for debug: print the number of element pairs that the list found
-        /*
+        ///*
         int numElements = fileElements.size();
         System.out.println("Number of Element Pairs in " + filepath + ": " + numElements);
-        */
+        //*/
 
         // return the filled hashmap
         return fileElements;

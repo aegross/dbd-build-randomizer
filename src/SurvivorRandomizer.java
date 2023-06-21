@@ -21,14 +21,14 @@ public class SurvivorRandomizer implements Randomizer {
     String[] survivorListLegendaryKeys; // pairs with survivorListLegendary
     ArrayList<String> survivorPerks;
     ArrayList<String> survivorOfferings;
-    // todo: something for items
+    ArrayList<String> itemTypes;
 
     // collection sizes
     int numSurvivors;
     int numSurvivorsLegendary;
     int numSurvivorPerks;
     int numSurvivorOfferings;
-    // todo: something for items
+    int numItemTypes;
 
     // constructor
     public SurvivorRandomizer() {
@@ -71,7 +71,10 @@ public class SurvivorRandomizer implements Randomizer {
             survivorOfferings = FileReader.readTextFile(survivorOfferingsFilepath);
             numSurvivorOfferings = survivorOfferings.size();
 
-            // todo: item stuff
+            // item types
+            String itemTypeFilepath = filepathSurvivor + "/item_types.txt";
+            itemTypes = FileReader.readTextFile(itemTypeFilepath);
+            numItemTypes = itemTypes.size();
         }
         catch (FileNotFoundException f) {
             // print the issue
@@ -218,6 +221,19 @@ public class SurvivorRandomizer implements Randomizer {
             randomNumbers.add(randomNum);
             System.out.println("Random Survivor Perk #" + (i+1) + ": " + survivorPerks.get(randomNum));
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String generateItemType() {
+        // generate a random number from [0, (numItemTypes - 1)]
+        int randItem = random.nextInt(numItemTypes);
+
+        // get the random item type and return it
+        String itemType = itemTypes.get(randItem);
+        return itemType;
     }
 
     /**
