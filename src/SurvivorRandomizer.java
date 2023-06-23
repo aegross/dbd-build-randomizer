@@ -43,7 +43,7 @@ public class SurvivorRandomizer implements Randomizer {
 
     public void setup() {
         // formatting
-        System.out.println("\n---------------------------------    Randomizer - Survivor    ---------------------------------\n");
+        System.out.println("---------------------------------    Randomizer - Survivor    ---------------------------------\n");
 
         // read all the "general" files
         try {
@@ -86,7 +86,7 @@ public class SurvivorRandomizer implements Randomizer {
         while (!responseValid) {
             // print the prompt asking the user what they want
             System.out.println("\nFrom the options below, select what you would like to randomly generate.");
-            System.out.println("\t(0) [EXIT PROGRAM] \n\t(1) Full Survivor Build " +
+            System.out.println("\t(0) [RETURN TO MENU] \n\t(1) Full Survivor Build " +
                     "\n\t(2) Full Survivor Build (Including Legendary Cosmetics) " +
                     "\n\t(3) Survivor \n\t(4) Survivor (Including Legendary Cosmetics) " +
                     "\n\t(5) Perks \n\t(6) Items \n\t(7) Item Add-Ons \n\t(8) Offerings");
@@ -97,11 +97,11 @@ public class SurvivorRandomizer implements Randomizer {
             // take the user's input and direct the application to the right randomizer
             // full survivor build
             if (responseNum == 1) {
-                // ...
+                generateFullSurvivorBuild(false);
             }
             // full survivor build (including legendary cosmetics)
             else if (responseNum == 2) {
-                // ...
+                generateFullSurvivorBuild(true);
             }
             // survivor
             else if (responseNum == 3) {
@@ -113,25 +113,23 @@ public class SurvivorRandomizer implements Randomizer {
             }
             // survivor perks
             else if (responseNum == 5) {
-                generateSurvivorPerks(4);
-                // todo: wrapper function
+                survivorPerkWrapper();
             }
             // items
             else if (responseNum == 6) {
-                // ...
+                generateItem(generateItemType());
             }
             // item add-ons
             else if (responseNum == 7) {
-                // ...
+                itemAddOnWrapper();
             }
             // offerings
             else if (responseNum == 8) {
                 generateSurvivorOffering();
             }
-            // terminate the program
+            // end the loop and return to main() in Main.java
             else if (responseNum == 0) {
                 responseValid = true;
-                System.exit(0);
             }
             else {
                 // the input was numerical, but invalid
@@ -224,16 +222,81 @@ public class SurvivorRandomizer implements Randomizer {
     }
 
     /**
-     *
-     * @return
+     * generateItemType() - randomly generates an item type (toolbox, med-kit, etc.) from the list
+     * present in item_types.txt.
+     * @return the file string corresponding to the item type generated
      */
     public String generateItemType() {
-        // generate a random number from [0, (numItemTypes - 1)]
+        // generate a random number
         int randItem = random.nextInt(numItemTypes);
 
         // get the random item type and return it
-        String itemType = itemTypes.get(randItem);
-        return itemType;
+        return itemTypes.get(randItem);
+    }
+
+    /**
+     * generateItem() - randomly generates an item of the given item type from the list(s) present in the
+     * items folder.
+     * @param itemType the type of the item to be generated
+     */
+    public void generateItem(String itemType) {
+        // attempt to open the respective .txt file with the items of that type
+        String itemFilepath = filepathSurvivor + "/items/" + itemType + "/" + itemType + ".txt";
+        ArrayList<String> itemList = new ArrayList<>();
+
+        try {
+            itemList = FileReader.readTextFile(itemFilepath);
+        }
+        catch (FileNotFoundException f) {
+            // print the issue
+            System.out.println(f);
+            f.printStackTrace();
+        }
+
+        // get the number of items of that type and generate a random number
+        int numItems = itemList.size();
+        int randItemNum = random.nextInt(numItems);
+
+        // print the randomly selected item
+        System.out.println("Random Item: " + itemList.get(randItemNum));
+    }
+
+    /**
+     * generateItemAddOns() - randomly generates one to two add-ons for the given item type based on the
+     * list(s) of add-ons present in the items folder.
+     * @param itemType the type of add-ons to be generated
+     * @param numAddOns the number of add-ons to be generated (1 or 2)
+     */
+    public void generateItemAddOns(String itemType, int numAddOns) {
+        // attempt to open the respective itemType_addons.txt file
+        String addOnFilepath = filepathSurvivor + "/items/" + itemType + "/" + itemType + "_addons.txt";
+        ArrayList<String> addOns = new ArrayList<>();
+
+        try {
+            addOns = FileReader.readTextFile(addOnFilepath);
+        }
+        catch (FileNotFoundException f) {
+            // print the issue
+            System.out.println(f);
+            f.printStackTrace();
+        }
+
+        // make a list for the random numbers that will be chosen
+        ArrayList<Integer> randomNumbers = new ArrayList<>();
+        int randomNum;
+        int addOnCount = addOns.size();
+
+        // generate numAddOns number of random numbers
+        for (int i = 0; i < numAddOns; i++) {
+            // if the number has already been chosen, do NOT add it (all selected add-ons should be unique)
+            // otherwise, add it
+            do randomNum = random.nextInt(addOnCount);
+            while (randomNumbers.contains(randomNum));
+
+            // print out the add-on that was selected
+            randomNumbers.add(randomNum);
+            System.out.println("Random Add-On #" + (i+1) + ": " + addOns.get(randomNum));
+        }
     }
 
     /**
@@ -250,5 +313,124 @@ public class SurvivorRandomizer implements Randomizer {
 
     //// wrapper functions - used when individual components are selected, and gives the user more options
 
+    /**
+     * survivorPerkWrapper() - A wrapper function for generateSurvivorPerks() which allows for
+     * the user to manually select the number of perks to be generated.
+     */
+    public void survivorPerkWrapper() {
+        // setup
+        boolean subResponse = false;
+        int numPerks;
+
+        // get the number of perks the user wants to generate
+        while (!subResponse) {
+            System.out.print("Enter the Number of Survivor Perks to Generate: ");
+            numPerks = commandLineInputSurvivor.nextInt();
+
+            if (numPerks > numSurvivorPerks) {
+                System.out.println("ERROR: Not enough unique survivor perks exist. Please try again with a lower number (<= " + numSurvivorPerks + ").\n");
+            }
+            else if (numPerks <= 0) {
+                System.out.println("ERROR: Input must be greater than zero. Please try again.\n");
+            }
+            else {
+                // stop the while-loop and run generateKillerPerks() w/ the given number
+                subResponse = true;
+                generateSurvivorPerks(numPerks);
+            }
+        }
+    }
+
+    /**
+     * ItemAddOnWrapper() - A wrapper function for generateItemAddOns() which allows for the user to
+     * manually select the item to generate add-ons for, along with the number of add-ons.
+     */
+    public void itemAddOnWrapper() {
+        // setup
+        int itemSelection;
+        int numAddOns;
+        String itemType = null;
+
+        // print out the item options
+        String capitalized; // for better presentation; .csv for item types is more than necessary so this is done instead
+        String current;
+
+        for (int i = 1; i <= numItemTypes; i++) {
+            current = itemTypes.get(i-1);
+            capitalized = current.substring(0,1).toUpperCase() + current.substring(1);
+
+            // print out the number (index + 1) used to select each item type
+            System.out.println("(" + i + ") " + capitalized);
+        }
+
+        // get the item the user wants to generate add-ons for
+        boolean subResponse = false;
+        while (!subResponse) {
+            System.out.print("\nSelect the Item Type to Generate Add-Ons For: ");
+            itemSelection = commandLineInputSurvivor.nextInt();
+
+            if ((itemSelection > numItemTypes) || (itemSelection <= 0)) {
+                System.out.println("ERROR: Invalid Input. Please Try Again.\n");
+            }
+            else {
+                // stop the while-loop and set the killer string to the correct key
+                subResponse = true;
+                itemType = itemTypes.get(itemSelection-1);
+                // System.out.println("Item Type Selected: " + killer); for debugging
+            }
+        }
+
+        // get the number of add-ons the user wants
+        subResponse = false;
+        while (!subResponse) {
+            System.out.print("Enter the Number of Add-Ons to Generate: ");
+            numAddOns = commandLineInputSurvivor.nextInt();
+
+            if (numAddOns > 2) {
+                System.out.println("ERROR: The value entered is too large. Please try again with a lower number (1 or 2).\n");
+            }
+            else if (numAddOns <= 0) {
+                System.out.println("ERROR: Input must be greater than zero. Please try again.\n");
+            }
+            else {
+                // stop the while-loop and run generateAddOns() w/ the given number
+                subResponse = true;
+                generateItemAddOns(itemType, numAddOns);
+            }
+        }
+    }
+
     //// full build wrapper function
+
+    /**
+     * generateFullSurvivorBuild() - uses generateSurvivor(), generateItemType(), generateItem(),
+     * generateItemAddOns(), generateSurvivorPerks(), and generateSurvivorOffering() to generate a complete
+     * survivor build with an item, two unique add-ons, four unique perks, and an offering.
+     *
+     * @param legendary indicates whether legendary cosmetics can be chosen as a survivor
+     */
+    public void generateFullSurvivorBuild(boolean legendary) {
+        // step one: generate the survivor
+        String survivorKey;
+
+        if (legendary) {
+            // if legendary is true, use the legendary function
+            survivorKey = generateSurvivorLegendary();
+        }
+        else {
+            // otherwise, use the normal one
+            survivorKey = generateSurvivor();
+        }
+
+        // step two: generate the item + add-ons
+        String itemType = generateItemType();
+        generateItem(itemType);
+        generateItemAddOns(itemType, 2);
+
+        // step three: generate the perks
+        generateSurvivorPerks(4);
+
+        // step four: generate the offering
+        generateSurvivorOffering();
+    }
 }

@@ -9,20 +9,21 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        // intro formatting
-        System.out.println("\n--------------------------    Dead By Daylight - Build Randomizer    --------------------------\n");
-
         // variables for user input
         Scanner commandLineInput = new Scanner(System.in);
         int responseNum;
         boolean responseValid = false;
 
-        // randomizer object
+        // randomizer object (not the most efficient method, but that's ok)
         Randomizer randomizer;
 
         // ask the user what build they want to generate (killer, survivor, or something pertaining to both),
         // then take the user's input and direct the application to the right randomizer
+        System.out.println(); // padding
         while (!responseValid) {
+            // intro formatting
+            System.out.println("--------------------------    Dead By Daylight - Build Randomizer    --------------------------\n");
+
             // killer = 0, survivor = 1, all = 2
             System.out.println("Select the side that you want to generate builds (or individual build components) for.");
             System.out.println("\t(0) [EXIT PROGRAM] \n\t(1) Killer \n\t(2) Survivor \n\t(3) Shared");
@@ -31,24 +32,18 @@ public class Main {
 
             // killer
             if (responseNum == 1) {
-                responseValid = true;
-
                 // create a new KillerRandomizer and move control to that class
                 randomizer = new KillerRandomizer();
                 randomizer.setup();
             }
             // survivor
             else if (responseNum == 2) {
-                responseValid = true;
-
                 // create a new SurvivorRandomizer and move control to that class
                 randomizer = new SurvivorRandomizer();
                 randomizer.setup();
             }
             // all (shared between both sides)
             else if (responseNum == 3) {
-                responseValid = true;
-
                 // create a new AllRandomizer and move control to that class
                 randomizer = new AllRandomizer();
                 randomizer.setup();

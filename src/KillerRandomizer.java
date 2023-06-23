@@ -39,7 +39,7 @@ public class KillerRandomizer implements Randomizer {
 
     public void setup() {
         // formatting
-        System.out.println("\n---------------------------------    Randomizer - Killer    -----------------------------------\n");
+        System.out.println("---------------------------------    Randomizer - Killer    -----------------------------------\n");
 
         // read all the "general" files
         try {
@@ -77,7 +77,7 @@ public class KillerRandomizer implements Randomizer {
         while (!responseValid) {
             // print the prompt asking the user what they want
             System.out.println("\nFrom the options below, select what you would like to randomly generate.");
-            System.out.println("\t(0) [EXIT PROGRAM] \n\t(1) Full Killer Build " +
+            System.out.println("\t(0) [RETURN TO MENU] \n\t(1) Full Killer Build " +
                     "\n\t(2) Full Killer Build (Including Legendary Cosmetics) " +
                     "\n\t(3) Killer \n\t(4) Killer (Including Legendary Cosmetics) " +
                     "\n\t(5) Perks \n\t(6) Add-Ons \n\t(7) Offerings");
@@ -114,10 +114,9 @@ public class KillerRandomizer implements Randomizer {
             else if (responseNum == 7) {
                 generateKillerOffering();
             }
-            // terminate the program
+            // end the loop and return to main() in Main.java
             else if (responseNum == 0) {
                 responseValid = true;
-                System.exit(0);
             }
             else {
                 // the input was numerical, but invalid
@@ -294,7 +293,7 @@ public class KillerRandomizer implements Randomizer {
 
     /**
      * killerAddOnWrapper() - A wrapper function for generateAddOns() which allows for the user to
-     * manually select the killer to generate add-ons for.
+     * manually select the killer to generate add-ons for, along with the number of add-ons.
      */
     public void addOnWrapper() {
         // setup
@@ -362,8 +361,9 @@ public class KillerRandomizer implements Randomizer {
 
     /**
      * generateFullKillerBuild() - uses generateKiller(), generateAddOns(), generateKillerPerks(),
-     * and generateKillerOffering() to generate a complete killer build with four unique perks and
-     * two unique add-ons.
+     * and generateKillerOffering() to generate a complete killer build with four unique perks, two unique
+     * add-ons, and an offering.
+     *
      * @param legendary indicates whether legendary cosmetics can be chosen as a killer
      */
     public void generateFullKillerBuild(boolean legendary) {
@@ -372,11 +372,11 @@ public class KillerRandomizer implements Randomizer {
 
         if (legendary) {
             // if legendary is true, use the legendary function
-            killerKey = this.generateKillerLegendary();
+            killerKey = generateKillerLegendary();
         }
         else {
             // otherwise, use the normal one
-            killerKey = this.generateKiller();
+            killerKey = generateKiller();
         }
 
         // step two: generate the add-ons
