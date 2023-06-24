@@ -33,7 +33,7 @@ public class AllRandomizer implements Randomizer {
 
     public void setup() {
         // section heading
-        System.out.println("------------------------------------    Randomizer - All    -----------------------------------");
+        System.out.println("\n------------------------------------    Randomizer - All    -----------------------------------");
 
         // execute the request the user gives, as long as the prompt is valid
         while (!responseValid) {

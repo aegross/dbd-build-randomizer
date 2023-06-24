@@ -43,7 +43,7 @@ public class SurvivorRandomizer implements Randomizer {
 
     public void setup() {
         // formatting
-        System.out.println("---------------------------------    Randomizer - Survivor    ---------------------------------\n");
+        System.out.println("\n---------------------------------    Randomizer - Survivor    ---------------------------------");
 
         // read all the "general" files
         try {
@@ -207,17 +207,30 @@ public class SurvivorRandomizer implements Randomizer {
         // make a list for the random numbers that will be chosen
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         int randomNum;
+        String str;
 
         // generate numPerks amount of random numbers
         for (int i = 0; i < numPerks; i++) {
             // if the number has already been chosen, do NOT add it (all selected perks should be unique)
             // otherwise, add it
-            do randomNum = random.nextInt(numSurvivorPerks);
+            do {
+                randomNum = random.nextInt(numSurvivorPerks + 1);
+                // if the max index was selected, that represents none
+                if (randomNum == numSurvivorPerks) break; // don't repeat; this can be selected more than once
+            }
             while (randomNumbers.contains(randomNum));
 
-            // print out the perk that was selected
-            randomNumbers.add(randomNum);
-            System.out.println("Random Survivor Perk #" + (i+1) + ": " + survivorPerks.get(randomNum));
+            // print out the perk(s) that were selected
+            if (randomNum == numSurvivorPerks) {
+                // if none was selected, don't add the number to the list of random numbers
+                // set str manually since the index isn't valid (out of bounds)
+                str = "(None)";
+            }
+            else {
+                randomNumbers.add(randomNum);
+                str = survivorPerks.get(randomNum);
+            }
+            System.out.println("Random Survivor Perk #" + (i+1) + ": " + str);
         }
     }
 
@@ -228,10 +241,15 @@ public class SurvivorRandomizer implements Randomizer {
      */
     public String generateItemType() {
         // generate a random number
-        int randItem = random.nextInt(numItemTypes);
+        int randItemNum = random.nextInt(numItemTypes + 1);
 
         // get the random item type and return it
-        return itemTypes.get(randItem);
+        if (randItemNum == numItemTypes) {
+            return "none"; // the index numItemTypes is out of bounds, refers to none
+        }
+        else {
+            return itemTypes.get(randItemNum);
+        }
     }
 
     /**
@@ -240,7 +258,13 @@ public class SurvivorRandomizer implements Randomizer {
      * @param itemType the type of the item to be generated
      */
     public void generateItem(String itemType) {
-        // attempt to open the respective .txt file with the items of that type
+        // short-circuit: if the item type is none, print none and return
+        if (itemType.equals("none")) {
+            System.out.println("Random Item: (None)");
+            return;
+        }
+
+        // otherwise, attempt to open the respective .txt file with the items of that type
         String itemFilepath = filepathSurvivor + "/items/" + itemType + "/" + itemType + ".txt";
         ArrayList<String> itemList = new ArrayList<>();
 
@@ -268,6 +292,9 @@ public class SurvivorRandomizer implements Randomizer {
      * @param numAddOns the number of add-ons to be generated (1 or 2)
      */
     public void generateItemAddOns(String itemType, int numAddOns) {
+        // short-circuit: if the item type is none immediately return
+        if (itemType.equals("none")) return;
+
         // attempt to open the respective itemType_addons.txt file
         String addOnFilepath = filepathSurvivor + "/items/" + itemType + "/" + itemType + "_addons.txt";
         ArrayList<String> addOns = new ArrayList<>();
@@ -283,6 +310,7 @@ public class SurvivorRandomizer implements Randomizer {
 
         // make a list for the random numbers that will be chosen
         ArrayList<Integer> randomNumbers = new ArrayList<>();
+        String str;
         int randomNum;
         int addOnCount = addOns.size();
 
@@ -290,12 +318,24 @@ public class SurvivorRandomizer implements Randomizer {
         for (int i = 0; i < numAddOns; i++) {
             // if the number has already been chosen, do NOT add it (all selected add-ons should be unique)
             // otherwise, add it
-            do randomNum = random.nextInt(addOnCount);
+            do {
+                randomNum = random.nextInt(addOnCount + 1);
+                // if the max index was selected, that represents none
+                if (randomNum == addOnCount) break; // don't repeat; this can be selected more than once
+            }
             while (randomNumbers.contains(randomNum));
 
             // print out the add-on that was selected
-            randomNumbers.add(randomNum);
-            System.out.println("Random Add-On #" + (i+1) + ": " + addOns.get(randomNum));
+            if (randomNum == addOnCount) {
+                // if none was selected, don't add the number to the list of random numbers
+                // set str manually since the index isn't valid (out of bounds)
+                str = "(None)";
+            }
+            else {
+                randomNumbers.add(randomNum);
+                str = addOns.get(randomNum);
+            }
+            System.out.println("Random Add-On #" + (i+1) + ": " + str);
         }
     }
 
@@ -304,11 +344,15 @@ public class SurvivorRandomizer implements Randomizer {
      * in survivor_offerings.txt.
      */
     public void generateSurvivorOffering() {
-        // generate a random number from [0, (numSurvivorOfferings - 1)]
-        int randOfferingNum = random.nextInt(numSurvivorOfferings);
+        // generate a random number from [0, numSurvivorOfferings]
+        int randOfferingNum = random.nextInt(numSurvivorOfferings + 1);
+        String str;
 
         // print out the offering that corresponds with the random number
-        System.out.println("Random Survivor Offering: " + survivorOfferings.get(randOfferingNum));
+        if (randOfferingNum == numSurvivorOfferings) str = "(None)";
+        else str = survivorOfferings.get(randOfferingNum);
+
+        System.out.println("Random Survivor Offering: " + str);
     }
 
     //// wrapper functions - used when individual components are selected, and gives the user more options

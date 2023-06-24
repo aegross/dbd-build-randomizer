@@ -39,7 +39,7 @@ public class KillerRandomizer implements Randomizer {
 
     public void setup() {
         // formatting
-        System.out.println("---------------------------------    Randomizer - Killer    -----------------------------------\n");
+        System.out.println("\n---------------------------------    Randomizer - Killer    -----------------------------------");
 
         // read all the "general" files
         try {
@@ -194,17 +194,30 @@ public class KillerRandomizer implements Randomizer {
         // make a list for the random numbers that will be chosen
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         int randomNum;
+        String str;
 
         // generate numPerks amount of random numbers
         for (int i = 0; i < numPerks; i++) {
             // if the number has already been chosen, do NOT add it (all selected perks should be unique)
             // otherwise, add it
-            do randomNum = random.nextInt(numKillerPerks);
+            do {
+                randomNum = random.nextInt(numKillerPerks + 1);
+                // if the max index was selected, that represents none
+                if (randomNum == numKillerPerks) break; // don't repeat; this can be selected more than once
+            }
             while (randomNumbers.contains(randomNum));
 
             // print out the perk that was selected
-            randomNumbers.add(randomNum);
-            System.out.println("Random Killer Perk #" + (i+1) + ": " + killerPerks.get(randomNum));
+            if (randomNum == numKillerPerks) {
+                // if none was selected, don't add the number to the list of random numbers
+                // set str manually since the index isn't valid (out of bounds)
+                str = "(None)";
+            }
+            else {
+                randomNumbers.add(randomNum);
+                str = killerPerks.get(randomNum);
+            }
+            System.out.println("Random Killer Perk #" + (i+1) + ": " + str);
         }
     }
 
@@ -233,6 +246,7 @@ public class KillerRandomizer implements Randomizer {
 
         // make a list for the random numbers that will be chosen
         ArrayList<Integer> randomNumbers = new ArrayList<>();
+        String str;
         int randomNum;
         int addOnCount = addOns.size();
 
@@ -240,12 +254,24 @@ public class KillerRandomizer implements Randomizer {
         for (int i = 0; i < numAddOns; i++) {
             // if the number has already been chosen, do NOT add it (all selected add-ons should be unique)
             // otherwise, add it
-            do randomNum = random.nextInt(addOnCount);
+            do {
+                randomNum = random.nextInt(addOnCount + 1);
+                // if the max index was selected, that represents none
+                if (randomNum == addOnCount) break; // don't repeat; this can be selected more than once
+            }
             while (randomNumbers.contains(randomNum));
 
             // print out the add-on that was selected
-            randomNumbers.add(randomNum);
-            System.out.println("Random Add-On #" + (i+1) + ": " + addOns.get(randomNum));
+            if (randomNum == addOnCount) {
+                // if none was selected, don't add the number to the list of random numbers
+                // set str manually since the index isn't valid (out of bounds)
+                str = "(None)";
+            }
+            else {
+                randomNumbers.add(randomNum);
+                str = addOns.get(randomNum);
+            }
+            System.out.println("Random Add-On #" + (i+1) + ": " + str);
         }
     }
 
@@ -254,11 +280,15 @@ public class KillerRandomizer implements Randomizer {
      * in killer_offerings.txt.
      */
     public void generateKillerOffering() {
-        // generate a random number from [0, (numKillerOfferings - 1)]
-        int randOfferingNum = random.nextInt(numKillerOfferings);
+        // generate a random number from [0, numKillerOfferings]
+        int randOfferingNum = random.nextInt(numKillerOfferings + 1);
+        String str;
 
         // print out the offering that corresponds with the random number
-        System.out.println("Random Killer Offering: " + killerOfferings.get(randOfferingNum));
+        if (randOfferingNum == numKillerOfferings) str = "(None)";
+        else str = killerOfferings.get(randOfferingNum);
+
+        System.out.println("Random Killer Offering: " + str);
     }
 
     //// wrapper functions - used when individual components are selected, and gives the user more options
