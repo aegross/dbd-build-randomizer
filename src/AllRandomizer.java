@@ -6,7 +6,7 @@ import java.util.Random; // if Random doesn't work: Math RANDOM FORMULA: Math.ra
 
 public class AllRandomizer implements Randomizer {
     // constants
-    final String filepathAll = "src/dbd_randomizer_files/all";
+    final String filepathAll = "/dbd_randomizer_files/all";
 
     // instance variables
     Scanner commandLineInputAll;

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class SurvivorRandomizer implements Randomizer {
     // constants
-    final String filepathSurvivor = "src/dbd_randomizer_files/survivor";
+    final String filepathSurvivor = "/dbd_randomizer_files/survivor";
 
     // instance variables
     Scanner commandLineInputSurvivor;

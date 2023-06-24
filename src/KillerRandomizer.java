@@ -4,7 +4,7 @@ import java.util.*;
 
 public class KillerRandomizer implements Randomizer {
     // constants
-    final String filepathKiller = "src/dbd_randomizer_files/killer";
+    final String filepathKiller = "/dbd_randomizer_files/killer";
 
     // instance variables
     Scanner commandLineInputKiller;

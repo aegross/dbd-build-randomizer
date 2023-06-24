@@ -18,7 +18,8 @@ public abstract class FileReader {
      */
     public static ArrayList<String> readTextFile(String filepath) throws FileNotFoundException {
         // create a scanner to read the given .txt file
-        Scanner fileReader = new Scanner(new File(filepath));
+        File fileToOpen = new File(System.getProperty("user.dir") + filepath);
+        Scanner fileReader = new Scanner(fileToOpen);
 
         // create an ArrayList to hold the elements of the lines in the file
         ArrayList<String> fileElements = new ArrayList<>();
@@ -56,7 +57,8 @@ public abstract class FileReader {
      */
     public static HashMap<String,String> readCSVFile(String filepath) throws FileNotFoundException {
         // create a scanner to read the given .csv file
-        Scanner fileReader = new Scanner(new File(filepath));
+        File fileToOpen = new File(System.getProperty("user.dir") + filepath);
+        Scanner fileReader = new Scanner(fileToOpen);
 
         // create a HashMap to hold the comma-separated **pairs** in the file
         HashMap<String,String> fileElements = new HashMap<>();
