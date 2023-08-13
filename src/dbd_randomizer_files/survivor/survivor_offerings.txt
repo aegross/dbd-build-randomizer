@@ -63,6 +63,7 @@ Crow's Eye (Forsaken Boneyard)
 Ichorous Loam (Withered Isle)
 Beef Tallow Mixture (The Decimated Borgo)
 Alien Flora (Dvarka Deepwood)
+Airlock Doors (Nostromo Wreckage)
 
 Shroud of Union
 Vigo's Shroud

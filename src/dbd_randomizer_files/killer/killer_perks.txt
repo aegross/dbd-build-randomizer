@@ -52,7 +52,7 @@ Fire Up
 Remember Me
 Blood Warden
 
-Hangman's Trick
+Scourge Hook: Hangman's Trick
 Surveillance
 Make Your Choice
 
@@ -139,3 +139,7 @@ Leverage
 Genetic Limits
 Forced Hesitation
 Machine Learning
+
+Alien Instinct
+Rapid Brutality
+Ultimate Weapon
